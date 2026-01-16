@@ -13,7 +13,6 @@ export default function Landing() {
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px]" />
       </div>
-
       <div className="relative z-10">
         {/* Hero Section */}
         <section className="container mx-auto px-4 pt-32 pb-24 lg:pt-48 lg:pb-32">
@@ -33,7 +32,7 @@ export default function Landing() {
               
               <h1 className="text-5xl lg:text-7xl font-display font-bold leading-tight mb-6">
                 The Future of <br />
-                <span className="text-gradient">Intelligent Mining</span>
+                <span className="text-gradient font-light text-[33px]">Intelligent Mining</span>
               </h1>
               
               <p className="text-lg text-muted-foreground mb-8 max-w-lg leading-relaxed">
