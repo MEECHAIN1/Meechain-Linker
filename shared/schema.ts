@@ -5,13 +5,13 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
-  password: text("password").notNull(), // In a real app, hash this!
+  password: text("password").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const miningStats = pgTable("mining_stats", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(), // Foreign key relation would be here
+  userId: integer("user_id").notNull(),
   balance: text("balance").default("0.00"),
   hashRate: text("hash_rate").default("0 MH/s"),
   active: boolean("active").default(false),

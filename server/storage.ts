@@ -3,7 +3,7 @@ import {
   users, miningStats,
   type User, type InsertUser,
   type MiningStats, type InsertMiningStats
-} from "@shared/schema";
+} from "../shared/schema";
 import { eq } from "drizzle-orm";
 
 export interface IStorage {
