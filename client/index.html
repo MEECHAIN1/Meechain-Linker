@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MeeChain | Ritual Hub & Marketplace</title>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -36,7 +36,7 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap');
-        
+
         body {
             background-color: #010409;
             font-family: 'Noto Sans Thai', sans-serif;
@@ -192,7 +192,7 @@
                     const luck = Math.random();
                     const isLegendary = luck > 0.7;
                     const newPower = Math.floor((selectedCards[0].power + selectedCards[1].power) * 1.8);
-                    
+
                     const newCard = {
                         id: Date.now(),
                         name: isLegendary ? 'MEE RITUAL ELITE' : 'ADVANCED BOT',
@@ -277,7 +277,7 @@
             const DashboardView = () => (
                 <div className="animate-in fade-in duration-500">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        
+
                         {/* Sidebar */}
                         <div className="lg:col-span-4 space-y-6">
                             <div className="glass rounded-[40px] p-8 relative overflow-hidden shadow-2xl">
@@ -339,7 +339,7 @@
                                 <div className="space-y-10 animate-in fade-in duration-700">
                                     <div className="bg-gradient-to-br from-[#111] via-[#050505] to-[#0a0a0a] border border-white/10 rounded-[64px] p-16 relative overflow-hidden shadow-2xl">
                                         <div className="absolute top-0 right-0 w-96 h-96 bg-ritual/5 blur-[150px] animate-pulse" />
-                                        
+
                                         <div className="flex flex-col lg:flex-row items-center justify-center gap-12 relative z-10 mb-20">
                                             {[0, 1].map(idx => (
                                                 <div key={idx} className={`w-64 h-80 rounded-[48px] border-4 border-dashed flex flex-col items-center justify-center transition-all duration-700 relative group overflow-hidden hologram-grid shadow-2xl ${selectedCards[idx] ? 'bg-ritual/5 border-ritual/40 scale-105' : 'bg-black/60 border-white/10'}`}>
@@ -362,7 +362,7 @@
                                             ))}
                                             <div className={`bg-ritual/20 p-8 rounded-full shadow-2xl transition-all duration-1000 ${isFusing ? 'animate-spin scale-150 bg-ritual/40' : 'hover:scale-110'}`}><MeeIcon name="Zap" size={48} className="text-ritual" /></div>
                                         </div>
-                                        
+
                                         <div className="flex flex-col items-center">
                                             {selectedCards.length === 2 && !isFusing && (
                                                 <div className="mb-10 text-center animate-in zoom-in bg-white/5 px-12 py-8 rounded-[40px] border border-white/10 glass">
@@ -380,7 +380,7 @@
                                             <p className="mt-6 text-[9px] font-black text-slate-600 uppercase tracking-[0.5em] italic leading-none">Fusion Ritual Fee: 200 MCB</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="bg-[#0f1117] border border-white/5 rounded-[48px] p-12">
                                         <h4 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-12 italic border-b border-white/5 pb-6 inline-block">Fleet Selection Repository</h4>
                                         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-6">
