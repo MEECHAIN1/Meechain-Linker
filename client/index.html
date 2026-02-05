@@ -1,15 +1,472 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fira+Code:wght@300..700&family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  </head>
-  <body>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeeChain | Ritual Hub & Marketplace</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#06b6d4', 
+                        ritual: '#34d399',
+                        fire: '#ef4444',
+                        water: '#3b82f6',
+                        light: '#fbbf24',
+                        dark: '#a855f7'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            background-color: #010409;
+            font-family: 'Noto Sans Thai', sans-serif;
+            color: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hologram-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, transparent 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        @keyframes pulse-ritual {
+            0%, 100% { box-shadow: 0 0 20px rgba(52, 211, 153, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(52, 211, 153, 0.4); }
+        }
+
+        .ritual-active {
+            animation: pulse-ritual 3s infinite;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #0891b2; border-radius: 10px; }
+
+        .image-glow {
+            filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.3));
+        }
+
+        .tab-active {
+            background: linear-gradient(90deg, #06b6d4, #0891b2);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+
+        .scanner-line {
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hologram-grid {
+            background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // --- ระบบข้อมูล Config ล่าสุด ---
+        const CONFIG = {
+            CHAIN_ID: "13390",
+            NETWORK_NAME: "MeeChain Ritual",
+            CURRENCY: "MCB",
+            GATEWAY: "tan-familiar-impala-721.mypinata.cloud",
+            ADMIN_WALLET: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            LOGO_URL: "https://api.dicebear.com/7.x/bottts/svg?seed=meechain-ritual&backgroundColor=06b6d4" 
+        };
+
+        // Stable Icon Component
+        const MeeIcon = ({ name, size = 20, className = "" }) => {
+            const [svg, setSvg] = useState('');
+            useEffect(() => {
+                if (window.lucide && window.lucide.icons) {
+                    const iconKey = name.charAt(0).toLowerCase() + name.slice(1);
+                    const icon = window.lucide.icons[iconKey] || window.lucide.icons[name.toLowerCase()];
+                    if (icon) {
+                        setSvg(icon.toSvg({ width: size, height: size, class: className, 'stroke-width': 2 }));
+                    }
+                }
+            }, [name, size, className]);
+            if (!svg) return <div style={{ width: size, height: size }} className={className} />;
+            return <span dangerouslySetInnerHTML={{ __html: svg }} className="inline-flex items-center" />;
+        };
+
+        const App = () => {
+            const [page, setPage] = useState('home');
+            const [tab, setTab] = useState('market');
+            const [mcbBalance, setMcbBalance] = useState(13390.00); 
+            const [inventory, setInventory] = useState([
+                { id: 1, name: 'Initial Bot', power: 15, rarity: 'Common', element: 'Fire', color: 'text-fire', image: 'https://api.dicebear.com/7.x/bottts/svg?seed=bot1' }
+            ]);
+            const [potions, setPotions] = useState(1);
+            const [selectedCards, setSelectedCards] = useState([]);
+            const [isFusing, setIsFusing] = useState(false);
+            const [logs, setLogs] = useState([
+                { id: 1, msg: 'Connected to MeeChain Ritual (13390)', type: 'success', time: '00:53' },
+                { id: 2, msg: 'Gateway Synchronization Complete', type: 'info', time: '00:54' }
+            ]);
+
+            const marketItems = [
+                { id: 'mi1', name: 'Lotus Guardian', power: 35, price: 1500, type: 'nft', element: 'Light', color: 'text-light', image: 'https://api.dicebear.com/7.x/bottts/svg?seed=lotus' },
+                { id: 'mi2', name: 'Luck Potion V2', power: 0, price: 300, type: 'item', element: 'Magic', color: 'text-ritual', image: 'https://api.dicebear.com/7.x/bottts/svg?seed=potion' },
+                { id: 'mi3', name: 'Void Hunter', power: 28, price: 900, type: 'nft', element: 'Dark', color: 'text-dark', image: 'https://api.dicebear.com/7.x/bottts/svg?seed=void' }
+            ];
+
+            const addLog = (msg, type = 'success') => {
+                setLogs(prev => [{ id: Date.now(), msg, type, time: new Date().toLocaleTimeString().slice(0, 5) }, ...prev].slice(0, 8));
+            };
+
+            const buyItem = (item) => {
+                if (mcbBalance < item.price) {
+                    addLog('ยอด MCB ไม่เพียงพอสำหรับรายการนี้', 'info');
+                    return;
+                }
+                setMcbBalance(prev => prev - item.price);
+                if (item.type === 'nft') {
+                    setInventory(prev => [{ ...item, id: Date.now(), rarity: 'Rare' }, ...prev]);
+                    addLog(`ซื้อ ${item.name} สำเร็จ!`, 'success');
+                } else {
+                    setPotions(prev => prev + 1);
+                    addLog(`ได้รับ Luck Potion เพิ่ม 1 ชิ้น`, 'success');
+                }
+            };
+
+            const handleFusion = () => {
+                if (selectedCards.length !== 2) return;
+                const fee = 200;
+                if (mcbBalance < fee) {
+                    addLog('ยอด MCB ไม่พอสำหรับค่าธรรมเนียมหลอมรวม', 'info');
+                    return;
+                }
+                setIsFusing(true);
+                setMcbBalance(prev => prev - fee);
+                addLog(`เริ่มพิธีกรรมหลอมรวม (Fee: ${fee} MCB)...`, 'info');
+
+                setTimeout(() => {
+                    const luck = Math.random();
+                    const isLegendary = luck > 0.7;
+                    const newPower = Math.floor((selectedCards[0].power + selectedCards[1].power) * 1.8);
+                    
+                    const newCard = {
+                        id: Date.now(),
+                        name: isLegendary ? 'MEE RITUAL ELITE' : 'ADVANCED BOT',
+                        power: newPower,
+                        rarity: isLegendary ? 'Legendary' : 'Epic',
+                        element: selectedCards[0].element,
+                        color: isLegendary ? 'text-ritual' : 'text-primary',
+                        image: `https://api.dicebear.com/7.x/bottts/svg?seed=fused-${Date.now()}`
+                    };
+
+                    setInventory(prev => [newCard, ...prev.filter(c => !selectedCards.find(sc => sc.id === c.id))]);
+                    setSelectedCards([]);
+                    setIsFusing(false);
+                    setTab('inventory');
+                    addLog(isLegendary ? '🔥 พิธีกรรมสำเร็จ! ได้รับยูนิตระดับ LEGENDARY' : 'หลอมรวมยูนิตสำเร็จ!', 'success');
+                }, 4000);
+            };
+
+            const Navigation = () => (
+                <nav className="fixed top-0 w-full z-[100] glass border-b border-white/5 h-16 px-6 shadow-2xl">
+                    <div className="max-w-7xl mx-auto h-full flex items-center justify-between">
+                        <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setPage('home')}>
+                            <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center p-1.5 border border-primary/30 group-hover:ritual-active transition-all">
+                                <img src={CONFIG.LOGO_URL} className="w-full h-full" alt="logo" />
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="font-black text-lg tracking-tighter text-white uppercase italic leading-none">MEECHAIN</span>
+                                <span className="text-[8px] font-bold text-ritual uppercase tracking-widest mt-1">Ritual Network</span>
+                            </div>
+                        </div>
+                        <div className="hidden md:flex items-center gap-10">
+                            <button onClick={() => setPage('home')} className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all ${page === 'home' ? 'text-primary' : 'text-slate-500 hover:text-white'}`}>Main</button>
+                            <button onClick={() => setPage('dashboard')} className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all ${page === 'dashboard' ? 'text-primary' : 'text-slate-500 hover:text-white'}`}>Operations</button>
+                        </div>
+                        <div className="flex items-center gap-4 bg-black/40 border border-white/10 px-5 py-2 rounded-2xl">
+                            <div className="flex items-center gap-2">
+                                <MeeIcon name="Coins" size={14} className="text-light" />
+                                <span className="text-[11px] font-black text-white italic">{mcbBalance.toLocaleString()} MCB</span>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            );
+
+            const MarketplaceView = () => (
+                <div className="space-y-10 animate-in fade-in duration-500">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {marketItems.map(item => (
+                            <div key={item.id} className="glass rounded-[48px] p-8 flex flex-col items-center group transition-all hover:border-primary/40 shadow-xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl" />
+                                <div className="w-48 h-48 rounded-[40px] bg-black/40 border border-white/5 relative flex items-center justify-center mb-8 shadow-inner">
+                                    <img src={item.image} className="w-32 h-32 group-hover:scale-110 transition-transform animate-float image-glow" />
+                                </div>
+                                <div className="w-full text-center">
+                                    <div className="flex justify-center gap-2 mb-4">
+                                        <span className={`text-[8px] font-black bg-white/5 ${item.color} px-3 py-1 rounded-full border border-white/5 uppercase tracking-[0.2em]`}>{item.element}</span>
+                                        <span className="text-[8px] font-black bg-white/5 text-slate-500 px-3 py-1 rounded-full border border-white/5 uppercase tracking-[0.2em]">{item.type}</span>
+                                    </div>
+                                    <h4 className="text-2xl font-black text-white italic uppercase tracking-tighter mb-6">{item.name}</h4>
+                                    <div className="bg-black/60 rounded-3xl p-5 border border-white/5 mb-8">
+                                        <div className="flex justify-between items-center px-2">
+                                            <div className="flex flex-col items-start">
+                                                <span className="text-[8px] font-bold text-slate-500 uppercase">Power</span>
+                                                <span className="text-xl font-black text-primary">+{item.power} MH/s</span>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-[8px] font-bold text-slate-500 uppercase">Price</span>
+                                                <span className="text-xl font-black text-light italic">{item.price} MCB</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => buyItem(item)} className="w-full py-4 rounded-[28px] tab-active font-black text-white text-[11px] uppercase tracking-[0.2em] transition-all transform active:scale-95">
+                                        Purchase Artifact
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const DashboardView = () => (
+                <div className="animate-in fade-in duration-500">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        
+                        {/* Sidebar */}
+                        <div className="lg:col-span-4 space-y-6">
+                            <div className="glass rounded-[40px] p-8 relative overflow-hidden shadow-2xl">
+                                <div className="absolute top-0 right-0 w-40 h-40 bg-ritual/10 blur-3xl animate-pulse" />
+                                <div className="flex items-center gap-5 mb-10 relative z-10">
+                                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-ritual to-primary p-0.5 shadow-xl">
+                                        <div className="w-full h-full bg-[#0a0a0a] rounded-2xl flex items-center justify-center overflow-hidden">
+                                            <MeeIcon name="ShieldCheck" size={32} className="text-ritual" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-black text-white uppercase italic leading-none">Admiral Thanawat</h2>
+                                        <span className="text-[9px] font-mono text-slate-500 truncate block w-44 mt-2">{CONFIG.ADMIN_WALLET}</span>
+                                    </div>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="bg-black/60 p-5 rounded-3xl border border-white/5 flex justify-between items-center group hover:border-ritual/40 transition-all">
+                                        <div className="flex flex-col">
+                                            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">Total Power</p>
+                                            <span className="text-2xl font-black text-ritual tracking-tighter leading-none">{inventory.reduce((s,n) => s+n.power, 0)} MH/s</span>
+                                        </div>
+                                        <MeeIcon name="Activity" size={24} className="text-ritual" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-[#0f1117] border border-white/5 rounded-[40px] p-8 shadow-xl">
+                                <h3 className="text-xs font-black text-white mb-6 uppercase tracking-widest italic border-b border-white/5 pb-4 flex items-center gap-2">
+                                    <MeeIcon name="History" size={14} className="text-primary" /> Ritual Activity
+                                </h3>
+                                <div className="space-y-4 max-h-56 overflow-y-auto custom-scrollbar pr-2">
+                                    {logs.map(log => (
+                                        <div key={log.id} className="flex gap-4 border-l-2 border-ritual/20 pl-4 py-1 animate-in slide-in-from-left-2">
+                                            <span className="text-[9px] font-mono text-slate-700">{log.time}</span>
+                                            <p className={`text-[10px] leading-tight font-bold ${log.type === 'success' ? 'text-ritual' : 'text-cyan-400'}`}>{log.msg}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Main Interaction Area */}
+                        <div className="lg:col-span-8 space-y-6">
+                            <div className="flex p-1.5 glass rounded-[32px] w-fit overflow-x-auto shadow-2xl border-white/5">
+                                {[
+                                    { id: 'market', label: 'Marketplace', icon: 'ShoppingBag' },
+                                    { id: 'fusion', label: 'Fusion Lab', icon: 'FlaskConical' },
+                                    { id: 'inventory', label: 'My Fleet', icon: 'Layout' }
+                                ].map(t => (
+                                    <button key={t.id} onClick={() => setTab(t.id)} className={`px-10 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-3 whitespace-nowrap ${tab === t.id ? 'tab-active text-white' : 'text-slate-500 hover:text-white'}`}>
+                                        <MeeIcon name={t.icon} size={14} className="mr-2" /> {t.label}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {tab === 'market' && <MarketplaceView />}
+
+                            {tab === 'fusion' && (
+                                <div className="space-y-10 animate-in fade-in duration-700">
+                                    <div className="bg-gradient-to-br from-[#111] via-[#050505] to-[#0a0a0a] border border-white/10 rounded-[64px] p-16 relative overflow-hidden shadow-2xl">
+                                        <div className="absolute top-0 right-0 w-96 h-96 bg-ritual/5 blur-[150px] animate-pulse" />
+                                        
+                                        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 relative z-10 mb-20">
+                                            {[0, 1].map(idx => (
+                                                <div key={idx} className={`w-64 h-80 rounded-[48px] border-4 border-dashed flex flex-col items-center justify-center transition-all duration-700 relative group overflow-hidden hologram-grid shadow-2xl ${selectedCards[idx] ? 'bg-ritual/5 border-ritual/40 scale-105' : 'bg-black/60 border-white/10'}`}>
+                                                    {selectedCards[idx] && !isFusing && <div className="scanner-line absolute w-full z-20" />}
+                                                    {selectedCards[idx] ? (
+                                                        <div className="relative flex flex-col items-center w-full h-full p-8 animate-in zoom-in duration-500">
+                                                            <div className="flex-1 flex items-center justify-center relative mb-8">
+                                                                <img src={selectedCards[idx].image} className="w-40 h-40 relative z-10 animate-float image-glow" />
+                                                            </div>
+                                                            <div className="bg-black/80 backdrop-blur-xl px-6 py-4 rounded-3xl border border-white/10 w-full text-center relative z-20 shadow-2xl">
+                                                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1 truncate leading-none">{selectedCards[idx].name}</p>
+                                                                <p className="text-3xl font-black text-ritual tracking-tighter leading-none">+{selectedCards[idx].power} <span className="text-[10px] text-slate-600 font-bold uppercase">MH/s</span></p>
+                                                            </div>
+                                                            <button onClick={() => setSelectedCards(prev => prev.filter((_, i) => i !== idx))} className="absolute -top-4 -right-4 bg-red-500 text-white p-3 rounded-full shadow-2xl hover:scale-110 transition-transform z-30"><MeeIcon name="X" size={14} /></button>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center text-slate-800 flex flex-col items-center gap-6"><MeeIcon name="Package" size={56} /><span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 italic">Insert Unit Core {idx+1}</span></div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                            <div className={`bg-ritual/20 p-8 rounded-full shadow-2xl transition-all duration-1000 ${isFusing ? 'animate-spin scale-150 bg-ritual/40' : 'hover:scale-110'}`}><MeeIcon name="Zap" size={48} className="text-ritual" /></div>
+                                        </div>
+                                        
+                                        <div className="flex flex-col items-center">
+                                            {selectedCards.length === 2 && !isFusing && (
+                                                <div className="mb-10 text-center animate-in zoom-in bg-white/5 px-12 py-8 rounded-[40px] border border-white/10 glass">
+                                                    <p className="text-[10px] font-black text-ritual uppercase tracking-[0.4em] mb-4">Ritual Status: Ready</p>
+                                                    <div className="flex items-center gap-10">
+                                                        <span className="text-4xl font-black text-white tracking-tighter opacity-30">{selectedCards[0].power + selectedCards[1].power}</span>
+                                                        <MeeIcon name="ChevronRight" className="text-ritual animate-pulse" size={40} />
+                                                        <span className="text-7xl font-black text-ritual tracking-tighter animate-pulse shadow-ritual/20">~{Math.floor((selectedCards[0].power + selectedCards[1].power) * 1.8)}+</span>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <button onClick={handleFusion} disabled={selectedCards.length !== 2 || isFusing} className={`group px-32 py-8 rounded-[40px] font-black text-2xl transition-all shadow-2xl relative overflow-hidden uppercase tracking-widest ${selectedCards.length === 2 && !isFusing ? 'tab-active text-white scale-105 hover:scale-110 active:scale-95' : 'bg-white/5 text-slate-700 border border-white/5'}`}>
+                                                <span className="relative z-10 flex items-center gap-4">{isFusing ? <MeeIcon name="RotateCw" className="animate-spin" size={24} /> : <MeeIcon name="Flame" size={24} />}{isFusing ? 'SYCHING IPFS...' : 'IGNITE RITUAL'}</span>
+                                            </button>
+                                            <p className="mt-6 text-[9px] font-black text-slate-600 uppercase tracking-[0.5em] italic leading-none">Fusion Ritual Fee: 200 MCB</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="bg-[#0f1117] border border-white/5 rounded-[48px] p-12">
+                                        <h4 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-12 italic border-b border-white/5 pb-6 inline-block">Fleet Selection Repository</h4>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-6">
+                                            {inventory.filter(n => !selectedCards.find(sc => sc.id === n.id)).map(nft => (
+                                                <div key={nft.id} onClick={() => selectedCards.length < 2 && setSelectedCards(prev => [...prev, nft])} className="p-8 rounded-[40px] border-2 border-white/5 bg-black/60 transition-all duration-500 cursor-pointer text-center relative group overflow-hidden hover:border-ritual/30">
+                                                    <img src={nft.image} className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform" />
+                                                    <p className="text-[10px] font-black text-white truncate uppercase tracking-tighter leading-none mb-2">{nft.name}</p>
+                                                    <p className="text-[12px] font-black text-ritual tracking-tighter leading-none">+{nft.power} MH/s</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {tab === 'inventory' && (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 animate-in zoom-in duration-500">
+                                    {inventory.map(nft => (
+                                        <div key={nft.id} className="glass rounded-[48px] overflow-hidden group hover:border-ritual/40 transition-all duration-500 shadow-2xl relative">
+                                            <div className="absolute top-8 left-8 z-20 flex flex-col gap-2">
+                                                <span className={`text-[9px] font-black px-4 py-1.5 rounded-full border shadow-xl ${nft.rarity === 'Legendary' ? 'bg-ritual/10 text-ritual border-ritual/20' : 'bg-slate-800 text-slate-400 border-white/10'}`}>{nft.rarity.toUpperCase()}</span>
+                                                <span className={`text-[9px] font-black px-4 py-1.5 rounded-full border shadow-xl bg-primary/10 ${nft.color} border-white/5 tracking-widest uppercase`}>{nft.element}</span>
+                                            </div>
+                                            <div className="aspect-square p-24 flex items-center justify-center bg-gradient-to-b from-ritual/5 to-transparent relative overflow-hidden">
+                                                <img src={nft.image} className="w-full h-full animate-float drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]" />
+                                            </div>
+                                            <div className="p-12 border-t border-white/5 bg-[#0a0a0a]/80 backdrop-blur-md">
+                                                <div className="flex justify-between items-center mb-8">
+                                                    <h4 className="font-black text-white text-3xl tracking-tighter uppercase italic leading-none">{nft.name}</h4>
+                                                    <div className="text-right"><span className="text-ritual font-black text-3xl leading-none">+{nft.power}</span><p className="text-[10px] text-slate-600 font-black uppercase mt-1">MH/s Power</p></div>
+                                                </div>
+                                                <button onClick={() => window.open(`https://${CONFIG.GATEWAY}/ipfs/${nft.hash || 'Qm...'}`)} className="w-full py-5 rounded-2xl bg-white/5 border border-white/10 text-[11px] font-black text-slate-400 hover:text-white transition-all flex items-center justify-center gap-3 uppercase italic tracking-widest">
+                                                    <MeeIcon name="ExternalLink" size={16} /> View on IPFS
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const HomeView = () => (
+                <div className="min-h-screen flex flex-col items-center justify-center bg-[#010409] text-center p-6 pt-16 relative overflow-hidden animate-in fade-in duration-700">
+                    <div className="absolute inset-0 bg-ritual/5 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none" />
+                    <div className="z-10 max-w-5xl">
+                        <div className="inline-flex items-center gap-2 bg-ritual/10 border border-ritual/20 px-5 py-2 rounded-full text-ritual text-[10px] font-black mb-10 tracking-[0.3em] uppercase shadow-2xl">
+                            <MeeIcon name="ShieldCheck" size={12} /> MeeChain Ritual Node: 13390 ACTIVE
+                        </div>
+                        <h1 className="text-6xl md:text-[140px] font-black text-white tracking-[1px] mb-10 leading-[0.8] uppercase italic drop-shadow-2xl">
+                            The Artifact <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-ritual via-primary to-cyan-300">Ritual</span>
+                        </h1>
+                        <p className="text-slate-400 max-w-2xl mx-auto text-xl font-medium leading-relaxed mb-16 px-4 italic">
+                            "รวบรวมยูนิตหายากผ่าน Marketplace และหลอมรวมพวกมัน <br /> บนบล็อกเชน MeeChain Ritual เพื่อครองความเป็นหนึ่งในฐานการขุด"
+                        </p>
+                        <button onClick={() => setPage('dashboard')} className="bg-ritual text-[#010409] px-20 py-8 rounded-[40px] font-black shadow-[0_20px_50px_rgba(52,211,153,0.3)] hover:scale-105 hover:bg-white transition-all text-xl uppercase tracking-widest group">
+                            Connect to Dashboard <MeeIcon name="ChevronRight" size={24} className="ml-4 group-hover:translate-x-2 transition-transform" />
+                        </button>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen">
+                    <Navigation />
+                    {page === 'home' ? <HomeView /> : <DashboardView />}
+
+                    <div className="fixed bottom-10 left-10 hidden md:flex items-center gap-8 bg-black/95 backdrop-blur-2xl border border-white/10 px-10 py-5 rounded-full z-50 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+                        <div className="flex flex-col">
+                            <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] mb-1 italic leading-none">Admin Operator</span>
+                            <span className="text-[12px] font-black text-white tracking-tight uppercase font-mono leading-none">0xf39F...266</span>
+                        </div>
+                        <div className="h-8 w-[1px] bg-white/10" />
+                        <div className="flex items-center gap-4">
+                            <MeeIcon name="Zap" size={18} className="text-ritual animate-pulse" />
+                            <span className="text-[11px] font-black text-ritual uppercase tracking-[0.2em] font-mono leading-none tracking-tighter">MCB RITUAL HUB: CONNECTED</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
 </html>

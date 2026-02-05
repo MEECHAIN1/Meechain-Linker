@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import logo from '@assets/logo.meechain_1768537047159.png';
 
-export function Navigation() {
+ export function Navigation() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
